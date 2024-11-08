@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4>Customer Management</h4>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover datatable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Joined Date</th>
+                        <th>Orders</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            {% set order_count = user.orders|length %}
+                            <span class="badge bg-{{ 'primary' if order_count > 0 else 'secondary' }}">
+                                {{ order_count }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-info view-orders" 
+                                    data-user-id="{{ user.id }}">
+                                <i data-feather="shopping-bag"></i>
+                            </button>
+                            <button class="btn btn-sm btn-warning edit-customer" 
+                                    data-user-id="{{ user.id }}">
+                                <i data-feather="edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger delete-customer" 
+                                    data-user-id="{{ user.id }}">
+                                <i data-feather="trash-2"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}

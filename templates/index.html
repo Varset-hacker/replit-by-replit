@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron text-center mb-5 slide-in">
+    <h1 class="display-4">Welcome to Lagmani</h1>
+    <p class="lead">Experience the finest dining with our exceptional cuisine and service</p>
+    <hr class="my-4">
+    <p class="mb-4">Make a reservation today to secure your table</p>
+    <a class="btn btn-primary btn-xl pulse-animation" href="{{ url_for('reservation') }}" role="button">Book Now</a>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title h4 mb-3">Our Menu</h5>
+                <p class="card-text flex-grow-1">Explore our diverse menu featuring both traditional and contemporary dishes.</p>
+                <a href="{{ url_for('menu') }}" class="btn btn-secondary mt-auto">View Menu</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title h4 mb-3">Reservations</h5>
+                <p class="card-text flex-grow-1">Book your table online for a seamless dining experience.</p>
+                <a href="{{ url_for('reservation') }}" class="btn btn-secondary mt-auto">Make Reservation</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title h4 mb-3">Contact Us</h5>
+                <p class="card-text flex-grow-1">Get in touch with us for special events and inquiries.</p>
+                <a href="{{ url_for('contact') }}" class="btn btn-secondary mt-auto">Contact</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

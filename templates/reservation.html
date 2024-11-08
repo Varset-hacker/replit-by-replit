@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="mb-4">Make a Reservation</h2>
+        <form method="POST" class="needs-validation" novalidate>
+            {{ form.csrf_token }}
+            
+            <div class="mb-3">
+                <label for="{{ form.customer_name.id }}" class="form-label">Name</label>
+                {{ form.customer_name(class="form-control") }}
+                {% if form.customer_name.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.customer_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.email.id }}" class="form-label">Email</label>
+                {{ form.email(class="form-control") }}
+                {% if form.email.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.phone.id }}" class="form-label">Phone</label>
+                {{ form.phone(class="form-control") }}
+                {% if form.phone.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.phone.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.date.id }}" class="form-label">Date</label>
+                    {{ form.date(class="form-control") }}
+                    {% if form.date.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.date.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.time.id }}" class="form-label">Time</label>
+                    {{ form.time(class="form-control") }}
+                    {% if form.time.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.time.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.guests.id }}" class="form-label">Number of Guests</label>
+                {{ form.guests(class="form-control") }}
+                {% if form.guests.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.guests.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Reservation</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/reservation.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Today's Reservations</h5>
+                <p class="card-text display-4">{{ reservations|length }}</p>
+                <a href="{{ url_for('admin_reservations') }}" class="btn btn-light">View All</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Menu Items</h5>
+                <p class="card-text display-4">{{ menu_items|length }}</p>
+                <a href="{{ url_for('admin_menu') }}" class="btn btn-light">Manage Menu</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Customers</h5>
+                <p class="card-text display-4">{{ customers|length }}</p>
+                <a href="{{ url_for('admin_customers') }}" class="btn btn-light">View All</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Orders</h5>
+                <p class="card-text display-4">{{ orders|length }}</p>
+                <a href="#" class="btn btn-light">View Orders</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                Recent Reservations
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Guests</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reservation in recent_reservations %}
+                            <tr>
+                                <td>{{ reservation.customer_name }}</td>
+                                <td>{{ reservation.date }}</td>
+                                <td>{{ reservation.time }}</td>
+                                <td>{{ reservation.guests }}</td>
+                                <td>
+                                    <span class="badge bg-{{ 'success' if reservation.status == 'confirmed' else 'warning' }}">
+                                        {{ reservation.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                Quick Actions
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{{ url_for('admin_menu') }}" class="list-group-item list-group-item-action">
+                        <i data-feather="edit"></i> Update Menu
+                    </a>
+                    <a href="{{ url_for('admin_reservations') }}" class="list-group-item list-group-item-action">
+                        <i data-feather="calendar"></i> Manage Reservations
+                    </a>
+                    <a href="{{ url_for('admin_customers') }}" class="list-group-item list-group-item-action">
+                        <i data-feather="users"></i> View Customer List
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i data-feather="settings"></i> System Settings
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

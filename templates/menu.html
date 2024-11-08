@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4 text-center">Our Menu</h2>
+
+    <div class="menu-categories">
+        <button class="category-btn active" data-category="all">
+            <i data-feather="grid"></i> All
+        </button>
+        {% for category in categories %}
+        <button class="category-btn" data-category="{{ category }}">
+            <i data-feather="{{ category_icons.get(category, 'menu') }}"></i>
+            {{ category|replace('_', ' ')|title }}
+        </button>
+        {% endfor %}
+    </div>
+
+    <div class="menu-grid">
+        {% for item in menu_items %}
+        <div class="menu-item" data-category="{{ item.category }}">
+            <div class="card h-100">
+                <img src="{{ item.image_url }}" 
+                     class="card-img-top" 
+                     alt="{{ item.name }}"
+                     onerror="this.src='https://images.unsplash.com/photo-1495195134817-033bccd8b088?w=600'">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <p class="card-text"><strong>${{ "%.2f"|format(item.price) }}</strong></p>
+                    {% if item.dietary_info %}
+                    <span class="badge bg-info">{{ item.dietary_info }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const menuItems = document.querySelectorAll('.menu-item');
+    const menuCategories = document.querySelector('.menu-categories');
+
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const category = this.dataset.category;
+            
+            // Update active state of buttons
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+
+            // Center the clicked button with smooth scroll
+            const container = menuCategories;
+            const scrollLeft = container.scrollLeft;
+            const buttonLeft = this.offsetLeft;
+            const containerWidth = container.clientWidth;
+            const buttonWidth = this.clientWidth;
+            
+            const targetScroll = buttonLeft - (containerWidth / 2) + (buttonWidth / 2);
+            
+            container.scrollTo({
+                left: targetScroll,
+                behavior: 'smooth'
+            });
+
+            // Filter menu items with smooth transitions
+            menuItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                    setTimeout(() => item.classList.remove('hidden'), 10);
+                } else {
+                    item.classList.add('hidden');
+                    setTimeout(() => item.style.display = 'none', 300);
+                }
+            });
+        });
+    });
+
+    // Initialize Feather icons
+    if (typeof feather !== 'undefined') {
+        feather.replace();
+    }
+});
+</script>
+{% endblock %}
